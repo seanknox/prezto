@@ -5,33 +5,35 @@
 # Authors: Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+## Don't muck with Ruby settings, just load the damn helper functions.
+
 # Load RVM into the shell session.
-if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-  # Unset AUTO_NAME_DIRS since auto adding variable-stored paths to ~ list
-  # conflicts with RVM.
-  unsetopt AUTO_NAME_DIRS
-
-  # Source RVM.
-  source "$HOME/.rvm/scripts/rvm"
-
+# if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+#   # Unset AUTO_NAME_DIRS since auto adding variable-stored paths to ~ list
+#   # conflicts with RVM.
+#   unsetopt AUTO_NAME_DIRS
+# 
+#   # Source RVM.
+#   source "$HOME/.rvm/scripts/rvm"
+# 
 # Load manually installed rbenv into the shell session.
-elif [[ -s "$HOME/.rbenv/bin/rbenv" ]]; then
-  path=("$HOME/.rbenv/bin" $path)
-  eval "$(rbenv init - --no-rehash zsh)"
+# elif [[ -s "$HOME/.rbenv/bin/rbenv" ]]; then
+#   path=("$HOME/.rbenv/bin" $path)
+#   eval "$(rbenv init - --no-rehash zsh)"
 
 # Load package manager installed rbenv into the shell session.
-elif (( $+commands[rbenv] )); then
-  eval "$(rbenv init - --no-rehash zsh)"
+# elif (( $+commands[rbenv] )); then
+#   eval "$(rbenv init - --no-rehash zsh)"
 
 # Install local gems according to operating system conventions.
-else
-  if [[ "$OSTYPE" == darwin* ]]; then
-    export GEM_HOME="$HOME/Library/Ruby/Gems/1.8"
-    path=("$GEM_HOME/bin" $path)
-  else
-    path=($HOME/.gem/ruby/*/bin(N) $path)
-  fi
-fi
+# else
+#   if [[ "$OSTYPE" == darwin* ]]; then
+#     export GEM_HOME="$HOME/Library/Ruby/Gems/1.8"
+#     path=("$GEM_HOME/bin" $path)
+#   else
+#     path=($HOME/.gem/ruby/*/bin(N) $path)
+#   fi
+# fi
 
 # Return if requirements are not found.
 if (( ! $+commands[ruby] && ! ( $+commands[rvm] || $+commands[rbenv] ) )); then
